@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Владислав Сысоев](https://up.htmlacademy.ru/javascript/18/user/332289).
-* Наставник: `Неизвестно`.
+* Наставник: [Andrey Karyakin](https://htmlacademy.ru/profile/id133011).
 
 ---
 
