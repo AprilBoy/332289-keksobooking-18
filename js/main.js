@@ -22,7 +22,14 @@ var getRandomElem = function (arr) {
 };
 
 var getRandomNumber = function () {
-  return '0' + (Math.floor(Math.random() * (8 - 1) + 1));
+  // eslint-disable-next-line no-undef
+  var res = new Set();
+  while (res.size < 8) {
+    res.add(Math.floor(Math.random() * (8 - 1 + 1)) + 1);
+  }
+  for (var num of Object.entries(res)) {
+    
+  }
 };
 
 var getLocationX = function () {
@@ -41,7 +48,7 @@ var getMockArray = function () {
       },
       'offer': {
         'title': 'offerTitle',
-        'address': location + location,
+        'address': location.x + location.y,
         'price': 123,
         'type': getRandomElem(TYPE),
         'rooms': getRandomElem(ROOMS),
@@ -58,6 +65,7 @@ var getMockArray = function () {
       }
     });
   }
+  console.dir(mockArray);
   return mockArray;
 };
 
