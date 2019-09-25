@@ -70,7 +70,6 @@ var mockPinsData = function () {
       }
     });
   }
-  console.dir(mockPinsData);
   return mockArray;
 };
 
@@ -94,7 +93,7 @@ var renderPins = function () {
   pins.forEach(function (pin) {
     fragment.appendChild(preparePinNode(pin));
   });
-  
+
   MAP.appendChild(fragment);
 };
 renderPins();
