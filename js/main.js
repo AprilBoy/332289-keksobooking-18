@@ -40,13 +40,13 @@ var getRandomValue = function (max, min) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-var getLocation = function (pinPosition) {
+var getLocation = function (max, min) {
   var location = [];
-  var randomPosition = 
+
   for (var i = 0; i < OBJ_NUMBER; i++) {
-    location.push(pinPosition);
+    location.push(getRandomValue(max, min));
   }
-  console.log(location);
+
   return location;
 };
 
@@ -54,8 +54,8 @@ var getLocation = function (pinPosition) {
 var getmockPinsData = function () {
   var mockArray = [];
   var imgNumber = getRandomNumber();
-  var locationX = getLocation(getRandomValue(CONTAINER_WIDTH, 0));
-  var locationY = getLocation(getRandomValue(LOCATION_Y_MAX, LOCATION_Y_MIN));
+  var locationX = getLocation(CONTAINER_WIDTH, 0);
+  var locationY = getLocation(LOCATION_Y_MAX, LOCATION_Y_MIN);
 
   for (var i = 0; i < OBJ_NUMBER; i++) {
     mockArray.push({
@@ -81,7 +81,6 @@ var getmockPinsData = function () {
       }
     });
   }
-  console.dir(mockArray);
   return mockArray;
 };
 
