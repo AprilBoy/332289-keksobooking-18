@@ -1,9 +1,7 @@
 'use strict';
 
 var TYPE = ['palace', 'flat', 'house', 'bungalo'];
-var ROOMS = [1, 2, 3, 100];
 var TIME = ['12:00', '13:00', '14:00'];
-var GUESTS = [0, 1, 2, 3];
 var FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.github.io/assets/images/tokyo/hotel2.jpg', 'http://o0.github.io/assets/images/tokyo/hotel3.jpg'];
 var OBJ_NUMBER = 8;
@@ -16,8 +14,10 @@ var CONTAINER_WIDTH = MAP.offsetWidth - PIN_WIDTH;
 
 
 var getRandomElem = function (arr) {
-  var startIndex = Math.floor(Math.random() * (arr.length - 1));
-  return arr.splice(startIndex, 1);
+  var min = 0;
+  var max = arr.length - 1;
+  var index = Math.floor(Math.random() * (max - min + 1)) + min;
+  return arr[index];
 };
 
 var getRandomNumber = function () {
@@ -32,36 +32,47 @@ var getRandomNumber = function () {
   });
   return numbers;
 };
+
+
 var getRandomValue = function (max, min) {
-  return Math.floor(Math.random() * (max - min) + min);
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
-var getLocationX = function () {
-  return Math.floor(Math.random() * (CONTAINER_WIDTH));
-};
-var getLocationY = function () {
-  return Math.floor(Math.random() * (LOCATION_Y_MAX - LOCATION_Y_MIN) + LOCATION_Y_MIN);
+
+var getLocation = function (pinPosition) {
+  var location = [];
+  var randomPosition = 
+  for (var i = 0; i < OBJ_NUMBER; i++) {
+    location.push(pinPosition);
+  }
+  console.log(location);
+  return location;
 };
 
 
-var mockPinsData = function () {
+var getmockPinsData = function () {
   var mockArray = [];
   var imgNumber = getRandomNumber();
+  var locationX = getLocation(getRandomValue(CONTAINER_WIDTH, 0));
+  var locationY = getLocation(getRandomValue(LOCATION_Y_MAX, LOCATION_Y_MIN));
+
   for (var i = 0; i < OBJ_NUMBER; i++) {
     mockArray.push({
       'author': {
         'avatar': imgNumber[i]
       },
       'location': {
-        'x': getLocationX(),
-        'y': getLocationY()
+        'x': locationX[i],
+        'y': locationY[i]
       },
       'offer': {
         'title': 'offerTitle',
-        'address': '' + location.x + ',' + location.y + '',
+        'address': '' + locationX[i] + ',' + locationY[i] + '',
         'price': getRandomValue(4000, 300),
         'type': getRandomElem(TYPE),
-        'rooms': getRandomElem(ROOMS),
-        'guests': getRandomElem(GUESTS),
+        'rooms': getRandomValue(1, 100),
+        'guests': getRandomValue(3, 0),
         'checkin': getRandomElem(TIME),
         'checkout': getRandomElem(TIME),
         'features': getRandomElem(FEATURES),
@@ -70,6 +81,7 @@ var mockPinsData = function () {
       }
     });
   }
+  console.dir(mockArray);
   return mockArray;
 };
 
@@ -86,7 +98,7 @@ var preparePinNode = function (currentPin) {
 
 
 var renderPins = function () {
-  var pins = mockPinsData();
+  var pins = getmockPinsData();
   var fragment = document.createDocumentFragment();
   document.querySelector('.map').classList.remove('map--faded');
 
