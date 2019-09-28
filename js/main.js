@@ -40,16 +40,6 @@ var getRandomValue = function (max, min) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-var getLocation = function (max, min) {
-  var location = [];
-
-  for (var i = 0; i < OBJ_NUMBER; i++) {
-    location.push(getRandomValue(max, min));
-  }
-
-  return location;
-};
-
 
 var getmockPinsData = function () {
   var mockArray = [];
@@ -80,7 +70,6 @@ var getmockPinsData = function () {
       }
     });
   }
-  console.dir(mockArray);
   return mockArray;
 };
 
