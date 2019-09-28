@@ -20,7 +20,7 @@ var getRandomElem = function (arr) {
   return arr[index];
 };
 
-var getRandomNumber = function () {
+var getAvatarImg = function () {
   // eslint-disable-next-line no-undef
   var res = new Set();
   var numbers = [];
@@ -53,9 +53,8 @@ var getLocation = function (max, min) {
 
 var getmockPinsData = function () {
   var mockArray = [];
-  var imgNumber = getRandomNumber();
-  var locationX = getLocation(CONTAINER_WIDTH, 0);
-  var locationY = getLocation(LOCATION_Y_MAX, LOCATION_Y_MIN);
+  var imgNumber = getAvatarImg();
+
 
   for (var i = 0; i < OBJ_NUMBER; i++) {
     mockArray.push({
@@ -63,12 +62,12 @@ var getmockPinsData = function () {
         'avatar': imgNumber[i]
       },
       'location': {
-        'x': locationX[i],
-        'y': locationY[i]
+        'x': getRandomValue(CONTAINER_WIDTH, 0),
+        'y': getRandomValue(LOCATION_Y_MAX, LOCATION_Y_MIN)
       },
       'offer': {
         'title': 'offerTitle',
-        'address': '' + locationX[i] + ',' + locationY[i] + '',
+        'address': '' + location.x + ',' + location.y + '',
         'price': getRandomValue(4000, 300),
         'type': getRandomElem(TYPE),
         'rooms': getRandomValue(1, 100),
@@ -81,6 +80,7 @@ var getmockPinsData = function () {
       }
     });
   }
+  console.dir(mockArray);
   return mockArray;
 };
 
