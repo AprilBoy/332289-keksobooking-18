@@ -7,16 +7,21 @@ var PHOTOS = ['http://o0.github.io/assets/images/tokyo/hotel1.jpg', 'http://o0.g
 var OBJ_NUMBER = 8;
 var LOCATION_Y_MAX = 630;
 var LOCATION_Y_MIN = 130;
-var MAP = document.querySelector('.map__pins');
-var PIN = document.querySelector('#pin').content.querySelector('.map__pin');
-var PIN_WIDTH = document.querySelector('.map__pin').offsetWidth;
-var CONTAINER_WIDTH = MAP.offsetWidth - PIN_WIDTH;
+var MAP = document.querySelector('.map');
+var PINS_BLOCK = MAP.querySelector('.map__pins');
+var PIN = MAP.querySelector('.map__pin');
+var PIN_IMG = PIN.querySelector('img');
+var PIN_WIDTH = MAP.querySelector('.map__pin').offsetWidth;
+var CONTAINER_WIDTH = PINS_BLOCK.offsetWidth - PIN_WIDTH;
 
+var getRandomValue = function (min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+};
 
 var getRandomElem = function (arr) {
-  var min = 0;
-  var max = arr.length - 1;
-  var index = Math.floor(Math.random() * (max - min + 1)) + min;
+  var index = getRandomValue(0, arr.length);
   return arr[index];
 };
 
@@ -24,20 +29,14 @@ var getAvatarImg = function () {
   // eslint-disable-next-line no-undef
   var res = new Set();
   var numbers = [];
+
   while (res.size < OBJ_NUMBER) {
-    res.add(Math.floor(Math.random() * OBJ_NUMBER) + 1);
+    res.add(getRandomValue(1, OBJ_NUMBER));
   }
   res.forEach(function (value) {
     numbers.push('img/avatars/user0' + value + '.png');
   });
   return numbers;
-};
-
-
-var getRandomValue = function (max, min) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 
@@ -47,17 +46,19 @@ var getmockPinsData = function () {
 
 
   for (var i = 0; i < OBJ_NUMBER; i++) {
+    var locationX = getRandomValue(CONTAINER_WIDTH, 0);
+    var locationY = getRandomValue(LOCATION_Y_MAX, LOCATION_Y_MIN);
     mockArray.push({
       'author': {
         'avatar': imgNumber[i]
       },
       'location': {
-        'x': getRandomValue(CONTAINER_WIDTH, 0),
-        'y': getRandomValue(LOCATION_Y_MAX, LOCATION_Y_MIN)
+        'x': locationX,
+        'y': locationY
       },
       'offer': {
         'title': 'offerTitle',
-        'address': '' + location.x + ',' + location.y + '',
+        'address': '' + locationX + ',' + locationY + '',
         'price': getRandomValue(4000, 300),
         'type': getRandomElem(TYPE),
         'rooms': getRandomValue(1, 100),
@@ -75,11 +76,11 @@ var getmockPinsData = function () {
 
 
 var preparePinNode = function (currentPin) {
-
   var pin = PIN.cloneNode(true);
+
   pin.style = 'left:' + currentPin.location.x + 'px; top:' + currentPin.location.y + 'px';
-  pin.querySelector('img').src = currentPin.author.avatar;
-  pin.querySelector('img').alt = currentPin.offer.description;
+  PIN_IMG.src = currentPin.author.avatar;
+  PIN_IMG.alt = currentPin.offer.description;
   return pin;
 
 };
@@ -88,12 +89,12 @@ var preparePinNode = function (currentPin) {
 var renderPins = function () {
   var pins = getmockPinsData();
   var fragment = document.createDocumentFragment();
-  document.querySelector('.map').classList.remove('map--faded');
+  MAP.classList.remove('map--faded');
 
   pins.forEach(function (pin) {
     fragment.appendChild(preparePinNode(pin));
   });
 
-  MAP.appendChild(fragment);
+  PINS_BLOCK.appendChild(fragment);
 };
 renderPins();
