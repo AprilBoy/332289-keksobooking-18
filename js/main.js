@@ -9,8 +9,10 @@ var LOCATION_Y_MAX = 630;
 var LOCATION_Y_MIN = 130;
 var MAP = document.querySelector('.map');
 var PINS_BLOCK = MAP.querySelector('.map__pins');
-var PIN = MAP.querySelector('.map__pin');
+var PIN = PINS_BLOCK.querySelector('.map__pin');
 var PIN_IMG = PIN.querySelector('img');
+var FORM_BLOCK = document.forms.adForm;
+var INPUT_BLOCK = FORM_BLOCK.querySelectorAll('fieldset');
 var PIN_WIDTH = MAP.querySelector('.map__pin').offsetWidth;
 var CONTAINER_WIDTH = PINS_BLOCK.offsetWidth - PIN_WIDTH;
 
@@ -89,7 +91,6 @@ var preparePinNode = function (currentPin) {
 var renderPins = function () {
   var pins = getmockPinsData();
   var fragment = document.createDocumentFragment();
-  MAP.classList.remove('map--faded');
 
   pins.forEach(function (pin) {
     fragment.appendChild(preparePinNode(pin));
@@ -98,3 +99,28 @@ var renderPins = function () {
   PINS_BLOCK.appendChild(fragment);
 };
 renderPins();
+
+
+INPUT_BLOCK.forEach(function (item) {
+  item.setAttribute('disabled', 'disabled');
+});
+
+
+var pinClickHandler = function () {
+  MAP.classList.remove('map--faded');
+  FORM_BLOCK.classList.remove('ad-form--disabled');
+  INPUT_BLOCK.forEach(function (item) {
+    item.removeAttribute('disabled');
+  });
+};
+
+
+var PINS = PINS_BLOCK.querySelectorAll('.map__pin--main');
+PINS.forEach(function (item) {
+  item.addEventListener('mousedown', pinClickHandler);
+  item.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === 13) {
+      pinClickHandler();
+    }
+  });
+});
