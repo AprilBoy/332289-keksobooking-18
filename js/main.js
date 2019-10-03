@@ -84,7 +84,6 @@ var preparePinNode = function (currentPin) {
   PIN_IMG.src = currentPin.author.avatar;
   PIN_IMG.alt = currentPin.offer.description;
   return pin;
-
 };
 
 
@@ -103,24 +102,28 @@ renderPins();
 
 INPUT_BLOCK.forEach(function (item) {
   item.setAttribute('disabled', 'disabled');
+  FORM_BLOCK.address.value = item.style.left + ', ' + item.style.top;
 });
 
 
-var pinClickHandler = function () {
+var pinClickHandler = function (pin) {
   MAP.classList.remove('map--faded');
   FORM_BLOCK.classList.remove('ad-form--disabled');
   INPUT_BLOCK.forEach(function (item) {
     item.removeAttribute('disabled');
   });
+  FORM_BLOCK.address.value = pin.style.left + ', ' + pin.style.top;
 };
 
 
 var PINS = PINS_BLOCK.querySelectorAll('.map__pin--main');
 PINS.forEach(function (item) {
-  item.addEventListener('mousedown', pinClickHandler);
+  item.addEventListener('mousedown', function () {
+    pinClickHandler(item);
+  });
   item.addEventListener('keydown', function (evt) {
     if (evt.keyCode === 13) {
-      pinClickHandler();
+      pinClickHandler(item);
     }
   });
 });
