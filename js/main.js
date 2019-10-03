@@ -102,7 +102,6 @@ renderPins();
 
 INPUT_BLOCK.forEach(function (item) {
   item.setAttribute('disabled', 'disabled');
-  FORM_BLOCK.address.value = item.style.left + ', ' + item.style.top;
 });
 
 
