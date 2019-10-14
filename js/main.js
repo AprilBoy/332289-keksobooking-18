@@ -86,18 +86,17 @@ var preparePinNode = function (currentPin) {
   return pin;
 };
 
+window.onload = FORM_BLOCK.address.value = PIN.style.left + ', ' + PIN.style.top;
 
 var renderPins = function () {
   var pins = getmockPinsData();
   var fragment = document.createDocumentFragment();
-
   pins.forEach(function (pin) {
     fragment.appendChild(preparePinNode(pin));
   });
-
   PINS_BLOCK.appendChild(fragment);
+
 };
-renderPins();
 
 
 INPUT_BLOCK.forEach(function (item) {
@@ -111,18 +110,17 @@ var pinClickHandler = function (pin) {
   INPUT_BLOCK.forEach(function (item) {
     item.removeAttribute('disabled');
   });
-  FORM_BLOCK.address.value = pin.style.left + ', ' + pin.style.top;
+  renderPins();
+
+
 };
 
 
-var PINS = PINS_BLOCK.querySelectorAll('.map__pin--main');
-PINS.forEach(function (item) {
-  item.addEventListener('mousedown', function () {
-    pinClickHandler(item);
-  });
-  item.addEventListener('keydown', function (evt) {
-    if (evt.keyCode === 13) {
-      pinClickHandler(item);
-    }
-  });
+PIN.addEventListener('mousedown', function () {
+  pinClickHandler(PIN);
+});
+PIN.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === 13) {
+    pinClickHandler(PIN);
+  }
 });
