@@ -87,7 +87,6 @@ var preparePinNode = function (currentPin) {
 };
 
 
-
 var renderPins = function () {
   var pins = getmockPinsData();
   var fragment = document.createDocumentFragment();
