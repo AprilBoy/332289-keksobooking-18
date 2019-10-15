@@ -86,7 +86,7 @@ var preparePinNode = function (currentPin) {
   return pin;
 };
 
-window.onload = FORM_BLOCK.address.value = PIN.style.left + ', ' + PIN.style.top;
+
 
 var renderPins = function () {
   var pins = getmockPinsData();
@@ -95,16 +95,16 @@ var renderPins = function () {
     fragment.appendChild(preparePinNode(pin));
   });
   PINS_BLOCK.appendChild(fragment);
-
+  FORM_BLOCK.address.value = PIN.style.left + (PIN_WIDTH / 2) + ', ' + PIN.style.top + (PIN_WIDTH / 2);
 };
 
-
+window.onload = FORM_BLOCK.address.value = PIN.style.left + ', ' + PIN.style.top;
 INPUT_BLOCK.forEach(function (item) {
   item.setAttribute('disabled', 'disabled');
 });
 
 
-var pinClickHandler = function (pin) {
+var pinClickHandler = function () {
   MAP.classList.remove('map--faded');
   FORM_BLOCK.classList.remove('ad-form--disabled');
   INPUT_BLOCK.forEach(function (item) {
@@ -116,7 +116,7 @@ var pinClickHandler = function (pin) {
 };
 
 
-PIN.addEventListener('mousedown', function () {
+PIN.addEventListener('click', function () {
   pinClickHandler(PIN);
 });
 PIN.addEventListener('keydown', function (evt) {
